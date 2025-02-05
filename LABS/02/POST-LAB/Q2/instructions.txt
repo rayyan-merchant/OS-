@@ -1,0 +1,10 @@
+- To compile:
+	g++ q2.cpp -o q2
+
+
+- To run:
+	./q2 1 2 3 5 6
+
+
+
+
