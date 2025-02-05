@@ -1,0 +1,13 @@
+- To compile:
+	g++ q1.cpp -o q1
+
+- To run:
+	./q3 10 20 30 40
+
+
+- If No integers provided:
+Error: Please provide at least one integer.
+
+- If invalid input:
+Error: 'error name' is not a valid integer.
+
