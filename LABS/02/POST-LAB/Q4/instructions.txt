@@ -1,0 +1,22 @@
+- create a text file and add multiple words and lines
+
+- To compile:
+	make
+
+
+- To run:
+	./q4
+
+
+- Output would be:
+Letter Count
+Word Count
+Line Count
+
+
+
+
+
+
+
+
