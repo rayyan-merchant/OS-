@@ -1,0 +1,14 @@
+- Create a file series.txt 
+	1 2 3 5 6 7
+
+
+- To compile:
+	g++ q2.cpp -o q2
+
+
+- To run:
+	./q2
+
+
+
+- check content in missing.txt
