@@ -1,0 +1,8 @@
+To compile program:
+	g++ q2.cpp -o output
+
+For running:
+	./output q2.txt
+
+
+
