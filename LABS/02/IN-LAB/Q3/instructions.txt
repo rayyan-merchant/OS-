@@ -1,0 +1,15 @@
+- To compile:
+	g++ q3.cpp -o q3
+
+- To run:
+	./q3 5 3 8 1 2
+
+___________________________
+
+- To run using user input:
+	./q3
+
+Then enter the number of integers and add numbers to command line
+
+
+
