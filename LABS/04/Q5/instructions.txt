@@ -1,0 +1,3 @@
+To compile and run:
+g++ Q5.cpp -o Q5
+./Q5
