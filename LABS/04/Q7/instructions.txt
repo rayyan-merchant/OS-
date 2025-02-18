@@ -1,0 +1,3 @@
+To compile and run:
+g++ Q7.cpp -o Q7
+./Q7
