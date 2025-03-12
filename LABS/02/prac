@@ -1,0 +1,112 @@
+#############################################
+# Combined Makefile – Five Different Examples
+#############################################
+
+.PHONY: all clean example1 example2 example3 example4 example5
+
+all: example1 example2 example3 example4 example5
+
+#####################################################
+# Example 1: Simple Makefile (No Variables)
+# Compile using a single command without object files.
+# Target: example1 → builds executable "hellomake1"
+#####################################################
+example1:
+	gcc -o hellomake1 hellomake.c hellofunc.c -I.
+
+#####################################################
+# Example 2: Using Variables for Compilation
+# Target: example2 → builds executable "hellomake2"
+# Assumes separate compilation into object files.
+#####################################################
+# Variables for example 2
+EX2_CC = gcc
+EX2_CFLAGS = -I.
+example2: hellomake2
+
+hellomake2: hellomake2.o hellofunc2.o
+	$(EX2_CC) $(EX2_CFLAGS) -o hellomake2 hellomake2.o hellofunc2.o
+
+hellomake2.o: hellomake.c
+	$(EX2_CC) $(EX2_CFLAGS) -c hellomake.c -o hellomake2.o
+
+hellofunc2.o: hellofunc.c
+	$(EX2_CC) $(EX2_CFLAGS) -c hellofunc.c -o hellofunc2.o
+
+#####################################################
+# Example 3: With Dependencies and Pattern Rules
+# Target: example3 → builds executable "hellomake3"
+# Uses a header dependency (hellomake.h)
+#####################################################
+# Variables for example 3
+EX3_CC = gcc
+EX3_CFLAGS = -I.
+EX3_DEPS = hellomake.h
+
+example3: hellomake3
+
+hellomake3: hellomake3.o hellofunc3.o
+	$(EX3_CC) $(EX3_CFLAGS) -o hellomake3 hellomake3.o hellofunc3.o
+
+hellomake3.o: hellomake.c $(EX3_DEPS)
+	$(EX3_CC) $(EX3_CFLAGS) -c hellomake.c -o hellomake3.o
+
+hellofunc3.o: hellofunc.c $(EX3_DEPS)
+	$(EX3_CC) $(EX3_CFLAGS) -c hellofunc.c -o hellofunc3.o
+
+#####################################################
+# Example 4: Using Automatic Variables
+# Target: example4 → builds executable "hellomake4"
+# Demonstrates use of $@, $<, and $^.
+#####################################################
+# Variables for example 4
+EX4_CC = gcc
+EX4_CFLAGS = -I.
+EX4_DEPS = hellomake.h
+EX4_OBJ = hellomake4.o hellofunc4.o
+
+example4: hellomake4
+
+hellomake4: $(EX4_OBJ)
+	$(EX4_CC) $(EX4_CFLAGS) -o hellomake4 $^
+	
+hellomake4.o: hellomake.c $(EX4_DEPS)
+	$(EX4_CC) $(EX4_CFLAGS) -c -o $@ $<
+	
+hellofunc4.o: hellofunc.c $(EX4_DEPS)
+	$(EX4_CC) $(EX4_CFLAGS) -c -o $@ $<
+
+#####################################################
+# Example 5: Using Directories, Libraries, and Clean Rules
+# Target: example5 → builds executable "hellomake5"
+# Assumes header files in ../include, objects in "obj", and links with -lm.
+#####################################################
+IDIR = ../include
+ODIR = obj
+LDIR = ../lib
+
+EX5_CC = gcc
+EX5_CFLAGS = -I$(IDIR)
+LIBS = -lm
+
+_DEPS = hellomake.h
+EX5_DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+_EX5_OBJ = hellomake5.o hellofunc5.o
+EX5_OBJ = $(patsubst %,$(ODIR)/%,$(_EX5_OBJ))
+
+example5: hellomake5
+
+$(ODIR)/%.o: %.c $(EX5_DEPS)
+	@mkdir -p $(ODIR)
+	$(EX5_CC) $(EX5_CFLAGS) -c -o $@ $<
+
+hellomake5: $(EX5_OBJ)
+	$(EX5_CC) $(EX5_CFLAGS) -o $@ $^ $(LIBS)
+
+#####################################################
+# Clean – Remove all generated executables and object files.
+#####################################################
+clean:
+	rm -f hellomake1 hellomake2 hellomake3 hellomake4 hellomake5
+	rm -f *.o
+	rm -rf $(ODIR)
